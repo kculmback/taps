@@ -1,0 +1,56 @@
+extends base.pug
+
+block content
+    h1.font-bold.text-3xl.text-center Culmback-Zobel Pub
+    hr.my-6
+
+    -
+        function makeTap(
+            name = '',
+            abv = '',
+            ibu = '',
+            description = '',
+            isHomebrew = null,
+            breweryName = '',
+            breweryWebsite = ''            
+        ) {
+            return {
+                name,
+                abv,
+                ibu,
+                isHomebrew,
+                description,
+                breweryName,
+                breweryWebsite
+            }
+        };
+
+        const taps = [
+            makeTap(
+                '"Tank 7" Saison',
+                '8.53',
+                '40',
+                `Based off of Boulevard Brewing's "Tank 7" saison ale. Find more information <a href="https://www.boulevard.com/beerinfo/tank-7-farmhouse-ale/">here</a>.`,
+            ),
+            makeTap(
+                '"Black Is Beautiful" Stout',
+                '3.81',
+                '80',
+                `Based off of the recipe from Weathered Soul's "Black Is Beautiful" project. More information can be found here: <a href="https://blackisbeautiful.beer/">blackisbeautiful.beer</a>.`,
+                true
+            ),
+            makeTap(),
+            makeTap(
+                'Bodacious Strawberry Blonde',
+                '5.8',
+                '10',
+                `City folks have their lawnmower beers. This is Big Barn’s tractor beer. This malt forward blonde ale refreshingly satisfies the thirsty pallet. Beer lovers who desire a break from hop and malt-heavy beers yet still crave something with character need look no further than this startlingly satisfying brew.`,
+                false,
+                'Big Barn Brewing',
+                'https://www.bigbarnbrewing.com/',
+            )
+        ]
+    
+    each tap, index in taps
+        include tap.pug
+            
