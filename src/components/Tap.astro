@@ -1,0 +1,98 @@
+---
+import { Image } from "astro:assets";
+import icon from "../assets/HB.png";
+import type { ImageMetadata } from "astro";
+
+type Base = {
+  name: string;
+  abv: number;
+  ibu?: number;
+  description: string;
+};
+
+type Homebrew = Base & {
+  type: "homebrew";
+};
+
+type Brewery = Base & {
+  type: "brewery";
+  website: string;
+  brewery: string;
+  logo: ImageMetadata;
+};
+
+type Empty = {
+  type: "empty";
+};
+
+export type TapInfo = Homebrew | Brewery | Empty;
+
+type Props = {
+  number: number;
+} & TapInfo;
+
+const props = Astro.props;
+---
+
+<div
+  class="w-full max-w-lg divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm"
+>
+  <div class="px-4 py-4 sm:px-6">
+    <div
+      class="-mt-2 -ml-4 flex flex-wrap items-center justify-between gap-8 sm:flex-nowrap"
+    >
+      <div class="mt-2 ml-4">
+        <h2 class="text-md font-semibold text-gray-700">#{props.number}</h2>
+        {
+          "name" in props && (
+            <h3 class="text-md mt-2 font-semibold text-gray-900">
+              {props.name}
+            </h3>
+          )
+        }
+      </div>
+
+      {
+        props.type === "homebrew" ? (
+          <div class="mt-2 ml-4 shrink-0">
+            <Image
+              src={icon}
+              alt=""
+              class="h-12 w-12 rounded-full border border-gray-200"
+            />
+          </div>
+        ) : (
+          props.type === "brewery" && (
+            <a
+              class="mt-2 ml-4 shrink-0"
+              href={props.website}
+              target={props.brewery}
+            >
+              <Image src={props.logo} alt="" class="w-20" />
+            </a>
+          )
+        )
+      }
+    </div>
+  </div>
+  <div class="px-4 py-5 sm:p-6">
+    {props.type === "empty" ? <p>Empty</p> : <p>{props.description}</p>}
+  </div>
+
+  {
+    props.type !== "empty" && (
+      <div class="px-4 py-4 sm:px-6">
+        <div class="flex gap-2">
+          <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-sm font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset">
+            {props.abv}% ABV
+          </span>
+          {props.ibu && (
+            <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-sm font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset">
+              {props.ibu} IBU
+            </span>
+          )}
+        </div>
+      </div>
+    )
+  }
+</div>

@@ -1,0 +1,50 @@
+---
+import "../styles/global.css";
+import Tap, { type TapInfo } from "../components/Tap.astro";
+import bodhizafaLogo from "../assets/bodhizafa.webp";
+
+const taps: TapInfo[] = [
+  { type: "empty" },
+  { type: "empty" },
+  {
+    type: "homebrew",
+    abv: 9.7,
+    ibu: 74,
+    name: "Big Blimp! American Barleywine",
+    description:
+      "The official homebrew recipe for Big Brew 2025 is based on Donna and Larry Reuter’s award-winning American barleywine that took home the gold in the 2019 (Providence, R.I.) and 2023 (San Diego, Calif.) National Homebrew Competition Final Rounds. The recipe has been updated with high-quality ingredients from the Big Brew 2025 sponsors, Lallemand Brewing and Rahr Malting Co. Expect a bold and hoppy strong ale of the highest caliber!",
+  },
+  { type: "empty" },
+  {
+    type: "brewery",
+    abv: 6.9,
+    name: "Bodhizafa",
+    description:
+      "This IPA gets its light silky texture from rolled oats. The flavor and aroma both express mandarin and citrus all around. Over five pounds of hops per barrel makes this IPA truly Bodhilicious.",
+    brewery: "Georgetown",
+    website: "https://georgetownbeer.com/",
+    logo: bodhizafaLogo,
+  },
+  {
+    type: "homebrew",
+    abv: 7.2,
+    name: "Seltzer",
+    description: "Plain ass seltzer.",
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Tap List</title>
+  </head>
+  <body
+    class="flex flex-col items-center justify-center space-y-6 bg-gray-100 p-6 font-sans text-base text-black"
+  >
+    {taps.map((tap, index) => <Tap {...tap} number={index + 1} />)}
+  </body>
+</html>
